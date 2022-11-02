@@ -1,6 +1,6 @@
 FROM ubuntu:bionic
 
-MAINTAINER hanwckf <hanwckf@vip.qq.com>
+LABEL maintainer="hanwckf <hanwckf@vip.qq.com>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
