@@ -75,11 +75,11 @@ jobs:
         id: read_release
         shell: bash
         run: |
-          r=$(cat release.md)                       # <--- Read release.md (Provide correct path as per your repo)
+          r=$(cat release.md)                               # <--- Read release.md (Provide correct path as per your repo)
           r="${r//'%'/'%25'}"                               # Multiline escape sequences for %
           r="${r//$'\n'/'%0A'}"                             # Multiline escape sequences for '\n'
           r="${r//$'\r'/'%0D'}"                             # Multiline escape sequences for '\r'
-          echo "::set-output name=RELEASE_BODY::$r"         # <--- Set environment variable
+          echo "{RELEASE_BODY}={$r}" >> $GITHUB_OUTPUT      # <--- Set environment variable
       - name: Upload images to Artifact
         if: ${{ github.event_name != 'release' && success() }}
         uses: actions/upload-artifact@v3.1.1
