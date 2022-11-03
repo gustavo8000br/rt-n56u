@@ -80,6 +80,12 @@ jobs:
           r="${r//$'\n'/'%0A'}"                             # Multiline escape sequences for '\n'
           r="${r//$'\r'/'%0D'}"                             # Multiline escape sequences for '\r'
           echo "{RELEASE_BODY}={$r}" >> $GITHUB_OUTPUT      # <--- Set environment variable
+      - name: Get Time
+        id: time
+        uses: nanzm/get-time-action@v1.1
+        with:
+          timeZone: 3
+          format: 'YYYY-MM-DD'
       - name: Upload images to Artifact
         if: ${{ github.event_name != 'release' && success() }}
         uses: actions/upload-artifact@v3.1.1
@@ -89,10 +95,13 @@ jobs:
       - name: Upload images to Releases
         if: ${{ github.event_name == 'release' && success() }}
         uses: svenstaro/upload-release-action@2.3.0
+        env:
+          TIME: "${{ steps.time.outputs.time }}"
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.images_dir }}/*.trx
           tag: ${{ github.ref }}
+          release_name: $TIME
           overwrite: true
           file_glob: true
           body: |
