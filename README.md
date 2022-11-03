@@ -7,7 +7,7 @@
 Welcome to the rt-n56u project
 
 This project aims to improve the rt-n56u and other supported devices on the software part, allowing power user to take full control over their hardware.
-This project was created in hope to be useful, but comes without warranty or support. Installing it will probably void your warranty. 
+This project was created in hope to be useful, but comes without warranty or support. Installing it will probably void your warranty.
 Contributors of this project are not responsible for what happens next.
 
 ## How do I get set up? ##
@@ -15,7 +15,7 @@ Contributors of this project are not responsible for what happens next.
 * [Get the tools to build the system](https://bitbucket.org/padavan/rt-n56u/wiki/EN/HowToMakeFirmware) or [Download pre-built system image](https://bitbucket.org/padavan/rt-n56u/downloads)
 * Feed the device with the system image file (Follow instructions of updating your current system)
 * Perform factory reset
-* Open web browser on http://my.router to configure the services
+* Open web browser on [Router Config Page](http://my.router) to configure the services
 
 ### Contribution guidelines ###
 
@@ -24,19 +24,20 @@ Contributors of this project are not responsible for what happens next.
 ***
 
 ### Special Note ###
-* Chinese dictionary from：https://github.com/gorden5566/padavan
-* Changelog：https://www.jianshu.com/p/d76a63a12eae
+
+* [Chinese dictionary](https://github.com/gorden5566/padavan)
+* [Changelog](https://www.jianshu.com/p/d76a63a12eae)
 
 ***
 
 ### Firmware Features ###
 
-* use [gorden5566](https://github.com/gorden5566/padavan) Chinese dictionary
+* [gorden5566](https://github.com/gorden5566/padavan) Chinese dictionary
 * aria2 front end replaced with [AriaNg](https://github.com/mayswind/AriaNg)
 * [curl](https://github.com/curl/curl) Optional compiled executable program ```CONFIG_FIRMWARE_INCLUDE_CURL```
-* used [PROMETHEUS](http://pm.freize.net/index.html) Some patches provided
-* used [Linaro1985/padavan-ng](https://gitlab.com/padavan-ng/padavan-ng) part of the package
-* The following plugins are optional：
+* [PROMETHEUS](http://pm.freize.net/index.html) Some patches provided
+* [Linaro1985/padavan-ng](https://gitlab.com/padavan-ng/padavan-ng) part of the package
+the following plugins are optional：
 * [scutclient](https://github.com/hanwckf/scutclient) ```CONFIG_FIRMWARE_INCLUDE_SCUTCLIENT```
 * [gdut-drcom](https://github.com/chenhaowen01/gdut-drcom) ```CONFIG_FIRMWARE_INCLUDE_GDUT_DRCOM```
 * [dogcom](https://github.com/hanwckf/dogcom) ```CONFIG_FIRMWARE_INCLUDE_DOGCOM```
@@ -66,7 +67,7 @@ Contributors of this project are not responsible for what happens next.
 * [wireguard-go](https://git.zx2c4.com/wireguard-go/) ```CONFIG_FIRMWARE_INCLUDE_WIREGUARD```
 * [smartdns](https://github.com/pymumu/smartdns) ```CONFIG_FIRMWARE_INCLUDE_SMARTDNS```
 
-## Supported Models: ##
+## Supported Models ##
 
 ```text
 * PSG1208
