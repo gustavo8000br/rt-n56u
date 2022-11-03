@@ -37,7 +37,7 @@ jobs:
           - build_variant: "mt7621-usb"
             targets: "XY-C1 JCG-836PRO JCG-AC860M JCG-Y2 DIR-882 A3004NS MSG1500 WR1200JS MI-R3G NEWIFI3 B70 ZTE_E8820S"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Prepare environment
         run: |
           sudo apt update
@@ -68,7 +68,7 @@ jobs:
           image_name=images_${build_variant}_${GIT_VERSION} || image_name=images_${build_variant}
           cd ${images_dir}; md5sum *.trx |tee md5sum.txt; 7z a -mx=9 ${image_name}.7z ./*
           echo "image_name=${image_name}" >> $GITHUB_ENV
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # This step reads a file from repo and use it for body of the release
       # This works on any self-hosted runner OS
       - name: Read release.md and use it as a body of new release
