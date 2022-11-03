@@ -37,7 +37,7 @@ jobs:
           - build_variant: "mt7621-usb"
             targets: "XY-C1 JCG-836PRO JCG-AC860M JCG-Y2 DIR-882 A3004NS MSG1500 WR1200JS MI-R3G NEWIFI3 B70 ZTE_E8820S"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2.5.0
       - name: Prepare environment
         run: |
           sudo apt update
@@ -68,7 +68,7 @@ jobs:
           image_name=images_${build_variant}_${GIT_VERSION} || image_name=images_${build_variant}
           cd ${images_dir}; md5sum *.trx |tee md5sum.txt; 7z a -mx=9 ${image_name}.7z ./*
           echo "image_name=${image_name}" >> $GITHUB_ENV
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2.5.0
       # This step reads a file from repo and use it for body of the release
       # This works on any self-hosted runner OS
       - name: Read release.md and use it as a body of new release
@@ -80,12 +80,6 @@ jobs:
           r="${r//$'\n'/'%0A'}"                             # Multiline escape sequences for '\n'
           r="${r//$'\r'/'%0D'}"                             # Multiline escape sequences for '\r'
           echo "{RELEASE_BODY}={$r}" >> $GITHUB_OUTPUT      # <--- Set environment variable
-      - name: Get Time
-        id: time
-        uses: nanzm/get-time-action@v1.1
-        with:
-          timeZone: 3
-          format: 'YYYY-MM-DD'
       - name: Upload images to Artifact
         if: ${{ github.event_name != 'release' && success() }}
         uses: actions/upload-artifact@v3.1.1
@@ -95,13 +89,10 @@ jobs:
       - name: Upload images to Releases
         if: ${{ github.event_name == 'release' && success() }}
         uses: svenstaro/upload-release-action@2.3.0
-        env:
-          TIME: "${{ steps.time.outputs.time }}"
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ env.images_dir }}/*.trx
           tag: ${{ github.ref }}
-          release_name: $TIME
           overwrite: true
           file_glob: true
           body: |
