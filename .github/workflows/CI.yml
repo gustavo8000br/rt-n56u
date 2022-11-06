@@ -71,7 +71,7 @@ jobs:
           echo "image_name=${image_name}, release_name=${release_name}" >> $GITHUB_ENV
       - name: Upload images to Artifact
         if: ${{ github.event_name != 'release' && success() }}
-        uses: actions/upload-artifact@vv2.2.1
+        uses: actions/upload-artifact@2.2.1
         with:
           name: ${{ env.image_name }}
           path: ${{ env.images_dir }}/*.7z
