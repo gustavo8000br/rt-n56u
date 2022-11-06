@@ -84,4 +84,4 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
-          release_name: ${{ env.image_name }}
+          release_name: ${{ env.release_name }}
