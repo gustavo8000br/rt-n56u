@@ -2,8 +2,6 @@ name: CI
 
 # Controls when the action will run. 
 on:
-  #schedule:
-    #- cron: '* * * * 4'
   push:
   pull_request:
   workflow_dispatch:
@@ -28,14 +26,16 @@ jobs:
     strategy:
       matrix:
         include:
-          - build_variant: "mt7620"
-            targets: "PSG1208 PSG1218 NEWIFI-MINI MI-MINI MI-3 OYE-001 5K-W20"
-          - build_variant: "mt7628"
-            targets: "HC5861B MI-NANO MZ-R13 MZ-R13P 360P2 HC5761A HC5661A"
-          - build_variant: "mt7621"
-            targets: "K2P_nano K2P DIR-878 RM2100 CR660x"
+          # - build_variant: "mt7620"
+          #  targets: "PSG1208 PSG1218 NEWIFI-MINI MI-MINI MI-3 OYE-001 5K-W20"
+          # - build_variant: "mt7628"
+          #  targets: "HC5861B MI-NANO MZ-R13 MZ-R13P 360P2 HC5761A HC5661A"
+          # - build_variant: "mt7621"
+          #  targets: "K2P_nano K2P DIR-878 RM2100 CR660x"
+          # - build_variant: "mt7621-usb"
+          #  targets: "XY-C1 JCG-836PRO JCG-AC860M JCG-Y2 DIR-882 A3004NS MSG1500 WR1200JS MI-R3G NEWIFI3 B70 ZTE_E8820S"
           - build_variant: "mt7621-usb"
-            targets: "XY-C1 JCG-836PRO JCG-AC860M JCG-Y2 DIR-882 A3004NS MSG1500 WR1200JS MI-R3G NEWIFI3 B70 ZTE_E8820S"
+            targets: "ZTE_E8820S"
     steps:
       - uses: actions/checkout@v2.5.0
       - name: Prepare environment
@@ -68,18 +68,6 @@ jobs:
           image_name=images_${build_variant}_${GIT_VERSION} || image_name=images_${build_variant}
           cd ${images_dir}; md5sum *.trx |tee md5sum.txt; 7z a -mx=9 ${image_name}.7z ./*
           echo "image_name=${image_name}" >> $GITHUB_ENV
-      - uses: actions/checkout@v2.5.0
-      # This step reads a file from repo and use it for body of the release
-      # This works on any self-hosted runner OS
-      - name: Read release.md and use it as a body of new release
-        id: read_release
-        shell: bash
-        run: |
-          r=$(cat release.md)                               # <--- Read release.md (Provide correct path as per your repo)
-          r="${r//'%'/'%25'}"                               # Multiline escape sequences for %
-          r="${r//$'\n'/'%0A'}"                             # Multiline escape sequences for '\n'
-          r="${r//$'\r'/'%0D'}"                             # Multiline escape sequences for '\r'
-          echo "{RELEASE_BODY}={$r}" >> $GITHUB_OUTPUT      # <--- Set environment variable
       - name: Upload images to Artifact
         if: ${{ github.event_name != 'release' && success() }}
         uses: actions/upload-artifact@v3.1.1
@@ -95,5 +83,3 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
-          body: |
-            ${{ steps.read_release.outputs.RELEASE_BODY }}
