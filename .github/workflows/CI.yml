@@ -66,8 +66,9 @@ jobs:
           ls -lh ${images_dir}
           GIT_VERSION=`git rev-parse --short=7 HEAD 2>/dev/null` && [ -n "$GIT_VERSION" ] && \
           image_name=images_${build_variant}_${GIT_VERSION} || image_name=images_${build_variant}
+          release_name=${build_variant}_${GIT_VERSION}
           cd ${images_dir}; md5sum *.trx |tee md5sum.txt; 7z a -mx=9 ${image_name}.7z ./*
-          echo "image_name=${image_name}" >> $GITHUB_ENV
+          echo "image_name=${image_name}, release_name=${release_name}" >> $GITHUB_ENV
       - name: Upload images to Artifact
         if: ${{ github.event_name != 'release' && success() }}
         uses: actions/upload-artifact@v3.1.1
@@ -83,3 +84,4 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
+          release_name: ${{ env.image_name }}
